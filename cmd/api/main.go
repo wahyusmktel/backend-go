@@ -58,7 +58,11 @@ func main() {
 
 	// 6. ✨ DAFTARKAN RUTE ✨
 	// (bergantung pada Handler)
+	categoryRepo := repository.NewCategoryRepository(db)
+	categoryService := services.NewCategoryService(categoryRepo)
+	categoryHandler := handlers.NewCategoryHandler(categoryService)
 	routes.RegisterAuthRoutes(r, authHandler)
+	routes.RegisterCategoryRoutes(r, categoryHandler)
 
 	// 7. Rute Health Check (opsional tapi bagus)
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
